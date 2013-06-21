@@ -1,0 +1,3 @@
+this is a collection of my work on a php to powershell api...
+
+initially it was just intended to run on a machine to service requests but I found I didn't need to bother using codeigniter or anything this complex.
