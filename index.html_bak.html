@@ -1,0 +1,49 @@
+<html>
+  <head>
+  <script src="http://code.jquery.com/jquery-1.5.2.js"></script>
+  <script>
+  function vmprov()
+	{
+		var data = formToJSON();
+		var response = apiCall('prov','POST',data);
+		response.success(function(data) {
+		var obj = jQuery.parseJSON(data);
+		document.getElementById('prov').innerHTML = obj.vmname;
+		});
+	}
+
+	function formToJSON() {
+		return JSON.stringify({
+		"vmname": $('#vmname').val()
+		});
+	}
+
+  function apiCall(url,verb,data)
+{
+	
+	var API_URL = 'http://assapcli001/djapi/ci/index.php/api/vmprov/';
+        return $.ajax(
+              {beforeSend: function(x) {
+        if(x && x.overrideMimeType) {
+            x.overrideMimeType("application/json;charset=UTF-8");
+        	}
+    	},
+
+              type: verb,
+	      dataType: 'json',
+	      contentType: 'application/json',
+              data: data,
+              url: API_URL + url,
+              success: function(response){
+		} 
+  });
+}
+  </script>
+  </head>
+  <body>
+    <div id="prov">
+       <input type="text" name="vmname" id="vmname" /><br>
+       <button onclick="vmprov();">Provision VM</button>
+    </div>
+  </body>
+  </html>

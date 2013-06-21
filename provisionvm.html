@@ -1,0 +1,114 @@
+<html>
+  <head>
+  <script src="http://code.jquery.com/jquery-1.5.2.js"></script>
+  <script>
+  function vmprov()
+	{
+		var data = formToJSON();
+		var response = apiCall('prov','POST',data);
+		response.success(function(data) {
+		var obj = jQuery.parseJSON(data);
+		document.getElementById('prov').innerHTML = obj.vmname;
+		});
+	}
+
+	function formToJSON() {
+		return JSON.stringify({
+		"vmname": $('#vmname').val(),
+                "ipaddr": $('#ipaddr').val(),
+                "subnet": $('#subnet').val(),
+                "gateway": $('#gateway').val(),
+                "pdns": $('#pdns').val(),
+                "sdns": $('#sdns').val(),
+                "vlan": $('#vlan').val(),
+                "cluster": $('#cluster').val(),
+                "specification": $('#specification').val(),
+                "template": $('#template').val(),
+                "owner": $('#owner').val(),
+                "backup": $('#backup').val(),
+                "purpose": $('#purpose').val(),
+                "support": $('#support').val()
+		});
+	}
+
+  function apiCall(url,verb,data)
+{
+	
+	var API_URL = 'http://assapcli001/djapi/ci/index.php/api/vmprov/';
+        return $.ajax(
+              {beforeSend: function(x) {
+        if(x && x.overrideMimeType) {
+            x.overrideMimeType("application/json;charset=UTF-8");
+        	}
+    	},
+
+              type: verb,
+	      dataType: 'json',
+	      contentType: 'application/json',
+              data: data,
+              url: API_URL + url,
+              success: function(response){
+		} 
+  });
+}
+  </script>
+  </head>
+  <body>
+    <div id="prov">
+       Virutal Machine Name: <input type="text" name="vmname" id="vmname" /><br>
+       IP Address: <input type="text" name="ipaddr" id="ipaddr" /><br>
+       Subnet Mask: <input type="text" name="subnet" id="subnet" /><br>
+       Gateway: <input type="text" name="gateway" id="gateway" /><br>
+       Primary DNS: <input type="text" name="pdns" id="pdns" /><br>
+       Secondary DNS: <input type="text" name="sdns" id="sdns" /><br>
+       VLAN: <select id="vlan" name="vlan">
+           <option value="0" selected>(please select:)</option>
+           <option value="VLAN178">VLAN178</option>
+           <option value="VLAN171">VLAN171</option>
+           <option value="VLAN60">VLAN60</option>
+           <option value="VLAN128">VLAN128</option>
+           <option value="VLAN126">VLAN126</option>
+           <option value="VLAN304">VLAN304</option>
+           <option value="VLAN10">VLAN10</option>
+           <option value="VLAN101">VLAN101</option>
+           <option value="VLAN103">VLAN103</option>
+           <option value="VLAN8">VLAN8</option>
+           <option value="VLAN50">VLAN50</option>
+           <option value="VLAN160">VLAN160</option>
+           <option value="VLAN101"">VLAN101</option>
+           <option value="VLAN6">VLAN6</option>
+           <option value="VLAN11">VLAN11</option>
+       </select><br>
+       Cluster: <select id="cluster" name="cluster">
+           <option value="0" selected>(please select:)</option>
+           <option value="HASPCluster">HASPCluster</option>
+           <option value="CorpCluster">CorpCluster</option>
+           <option value="HASPProdCluster">HASPProdCluster</option>
+           <option value="ProdCluster">ProdCluster</option>
+       </select><br>
+       Specification: <select id="specification"name="specification">
+           <option value="autodeploy" selected>autodeploy</option>
+       </select><br>
+       Template: <select id="template" name="template">
+           <option value="W2K8R2_current" selected>W2K8R2_current</option>
+       </select><br>
+       Owner: <input type="text" name="owner" id="owner" /><br>
+       Backup: <select id="backup" name="backup">
+           <option value="N" selected>N</option>
+           <option value="Y">Y</option>
+       </select><br>
+       Purpose: <input type="text" name="purpose" id="purpose" /><br>
+       Support: <select id="support" name="support">
+           <option value="0" selected>(please select:)</option>
+           <option value="CorpIT">CorpIT</option>
+           <option value="Hosting">Hosting</option>
+           <option value="HostingWinOps">HostingWinOps</option>
+           <option value="Infrastructure">Infrastructure</option>
+       </select><br>
+       
+       
+       <button onclick="vmprov();">Provision VM</button>
+    </div>
+  </body>
+  </html>
+
